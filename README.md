@@ -1,0 +1,1 @@
+Please refer to [ghp-maven-plugin](https://github.com/windy1/ghp-maven-plugin) for reference.

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>se.walkercrou</groupId>
+    <artifactId>ghp-maven-archetype</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>GitHub Pages Maven Archetype</name>
+    <description>Quickstart for developers wanting to integrate the GHP Maven Plugin</description>
+    <url>https://github.com/windy1/ghp-maven-archetype</url>
+    <inceptionYear>2015</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/windy1/ghp-maven-archetype/blob/master/LICENSE.md</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Walker Crouse</name>
+            <email>walkercrouse@hotmail.com</email>
+            <timezone>EST</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/windy1/ghp-maven-archetype/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:windy1/ghp-maven-archetype.git</connection>
+        <developerConnection>scm:git:git@github.com:windy1/ghp-maven-archetype.git</developerConnection>
+        <url>git@github.com:windy1/ghp-maven-archetype.git</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <properties>
+        <maven-plugins.groupId>org.apache.maven.plugins</maven-plugins.groupId>
+        <source-plugin.version>2.4</source-plugin.version>
+        <javadoc-plugin.version>2.10.1</javadoc-plugin.version>
+        <gpg-plugin.version>1.6</gpg-plugin.version>
+        <nexus-plugin.version>1.6.5</nexus-plugin.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>${maven-plugins.groupId}</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${source-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>${maven-plugins.groupId}</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>${maven-plugins.groupId}</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
